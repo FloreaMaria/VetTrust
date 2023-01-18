@@ -19,6 +19,6 @@ public class Pet {
     @ManyToOne
     private PetOwner petOwner;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private History history;
+    @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
+    private List<Appointment> appointments;
 }

@@ -1,11 +1,8 @@
 package com.example.vettrust.service;
 
 import com.example.vettrust.dto.PetDto;
-import com.example.vettrust.dto.user.PetOwnerDto;
-import com.example.vettrust.model.History;
 import com.example.vettrust.model.Pet;
 import com.example.vettrust.model.PetOwner;
-import com.example.vettrust.repository.HistoryRepository;
 import com.example.vettrust.repository.PetRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +17,13 @@ import java.util.stream.Collectors;
 public class PetService {
     private final PetOwnerService petOwnerService;
     private final PetRepository petRepository;
-    private final HistoryRepository historyRepository;
+
 
     @Autowired
-    public PetService(PetOwnerService petOwnerService, PetRepository petRepository, HistoryRepository historyRepository) {
+    public PetService(PetOwnerService petOwnerService, PetRepository petRepository) {
         this.petOwnerService = petOwnerService;
         this.petRepository = petRepository;
-        this.historyRepository = historyRepository;
+
     }
 
     @Transactional
@@ -57,14 +54,6 @@ public class PetService {
             pet.setAge(petDto.getAge());
             pet.setName(petDto.getName());
             pet.setType(petDto.getType());
-            if(petDto.getHistoryId() != null){
-                Optional<History> history = historyRepository.findById(petDto.getHistoryId());
-                history.ifPresent(pet::setHistory);
-            }
-            else{
-                History newHistory = new History();
-                pet.setHistory(newHistory);
-            }
             return PetDto.entityToDto(petRepository.save(pet));
         }
         return null;

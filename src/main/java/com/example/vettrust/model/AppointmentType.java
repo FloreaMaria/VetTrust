@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,7 +16,7 @@ public class AppointmentType {
     private String name;
     private Double price;
 
-    @OneToOne(mappedBy = "appointmentType")
-    private Appointment appointment;
+    @OneToMany(mappedBy = "appointmentType", cascade = CascadeType.ALL)
+    private List<Appointment> appointments;
 
 }

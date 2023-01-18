@@ -19,7 +19,7 @@ public class Appointment {
     private AppointmentStatus appointmentStatus;
 
     @ManyToOne
-    private History history;
+    private Pet pet;
 
     @ManyToOne
     private VetUser vetUser;
@@ -27,7 +27,7 @@ public class Appointment {
     @ManyToOne
     private ClinicLocation clinicLocation;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private AppointmentType appointmentType;
 
     @OneToMany(mappedBy = "appointment", cascade = CascadeType.ALL)

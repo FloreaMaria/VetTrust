@@ -11,7 +11,6 @@ public class PetDto {
     private Long age;
     private String name;
     private String type;
-    private Long historyId;
     private Long petOwnerId;
 
     public static @NotNull PetDto entityToDto(@NotNull Pet pet) {
@@ -20,9 +19,6 @@ public class PetDto {
         dto.setName(pet.getName());
         dto.setType(pet.getType());
         dto.setPetOwnerId(pet.getPetOwner().getId());
-        if(pet.getHistory() != null){
-            dto.setHistoryId(pet.getHistory().getId());
-        }
         return dto;
     }
 }

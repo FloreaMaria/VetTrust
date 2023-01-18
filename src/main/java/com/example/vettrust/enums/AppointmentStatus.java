@@ -1,5 +1,5 @@
 package com.example.vettrust.enums;
 
 public enum AppointmentStatus {
-    FULFILLED, UNFULFILLED, CANCELED
+    VALID, FULFILLED, UNFULFILLED, CANCELED
 }
