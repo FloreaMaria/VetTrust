@@ -4,33 +4,35 @@
 
 ## App functionalities
  The platform is designed to help all three of pets, pet owners and vets by offering a set of features and functionalities for each of them.
-### The pet owners have the posibility to chose from a specific clinic and vet as well as for a certain date to make an appointment for their pets and also to give feedback to the vet based on his performance. 
+### Pet Owners
+ The pet owners have the posibility to chose from a specific clinic and vet as well as for a certain date to make an appointment for their pets and update its status. 
+ They can give feedback to the vet based on his performance. 
+ They will also receive reminders and notifications regarding the appoinments they made and can view their registeres pets along with their records.
+### Vet Users
+ As a vet user you have the options to view all your appointments based on different criteria, update their status, to modify your schedule and available hours, to work from different locations of clinic, view pacients records, issue diagnosis for patients, receive feedback on your performance.
 
 ## User Stories - implemented 
-1. As a user, I would like to be able to create a profile on the platform so that I can use it;
-2. As a user, I would like to post question and give answers so that I can receive and give advice;
-3. As a user, I would like to have full control over my questions and answers so that I can manage them better;
-4. As a user, I would like to vote responses so that I can give my feedback;
-5. As a user, I would like to suggest edit to other questions so that I can have a better understanding of them;
-6. As a user, I would like to mark an answer as accepted so that I can highlight the answer that worked for me;
-7. As a user, I would like to sort the answers by different criteria so that I can manage them better;
-8. As a user, I would like to filter the answers by different criteria so that I can view only what interests me;
-9. As a user, I would like to receive a badge if my answer is top voted so that my credit could be recognized;
-10. As a user, I would like to see the most popular questions so that I can see what interests most of the users;
-11. As a user, I would like to be able to view another user profile so that I can determine his credibility;
-12. As a user, I would like to be notified when someone answers my question so that I can find the information more quickly;
-13. As a user, I would like to receive a reminder when an answer to my question is popular so that I can mark it as accepted;
-14. As a user, I would like to be able to close a question if it has an accepted answer that is also popular so that I can mark the end of the discussion.
+1. As a pet owner I would like to view all of my pet's appointments;
+2. As a pet owner I would like to receive reminders of my appointment;
+3. As a pet owner I would like to give feedback and reviews for my pet's vet;
+4. As a pet owner I would like to see my pets that are already stored in clinic system;
+5. As a pet owner i would like to make an appointment to a specific location, doctor and date;
+6. As a vet I would like to view all my appointments;
+7. As a vet I would like to view all my appointments for the current day;
+8. As a vet I would like to view all my appointments for a specific appointment TYPE;
+9. As a vet I would like to view all my schedules and modify my working hours;
+10. As a vet I would like to be able to work from different ocations of the clinic;
+11. As a vet I would like to view all my pacients records;
+12. As a vet I would like to receive feedback and reviews on my work;
+13. As a vet I would like to be able to issue diagnosis and recommendations based on appointments conclusions;
 
 ## Future developments 
 
-1. As a user, I would like to be able to report or block another user so that I can mark improper activity;
-2. As a user, I would like to filter the questions by different criteria so that I can see where can I enter the discussion;
-3. As a user, I would like to connect the platform to my Facebook account so that I can share the questions;
-4. As a user, I would like to be able to tag another user in an answer so that I can notify someone that might know the correct information;
-5. As a user, I would like to be able to attach files to my questions and answers so that I can describe the idea better;
-6. As an admin, I would like to be able to ban a user so that I can penalize improper activity;
-7. As an admin, I would like to be able to delete any question or answer so that I can minimize improper activity;
+1. As a pet owner, I would like to be able to filter vet doctors based on available hours and available locations;
+2. As a pet owner, I would like to be able to download my pet diagnosis on PDF format;
+3. As a pet owner, I would like to connect the platform to my Facebook account;
+4. As a vet user, I would like to receive reminders and notifications about canceled appointments;
+5. As a vet user, I would like to be able to attach files to my diagnosis conclusion;
 
 ## Technologies 
 
@@ -40,5 +42,4 @@
 * [Mysql](https://www.mysql.com/)
 * [Postman](https://www.postman.com/)
 * [Junit](https://junit.org/junit5/)
-* [SonarQube](https://www.sonarqube.org/)
-* [Mockito](https://site.mockito.org/)
+
