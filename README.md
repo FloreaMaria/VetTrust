@@ -59,6 +59,10 @@
 - VetUserService
 - VetScheduleService
 
+##Entity Relashionship diagram
+![alt text](http://url/to/img.png)
+
+
 ## Technologies 
 
 * [Java](https://www.java.com/en/)
