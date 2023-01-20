@@ -60,7 +60,7 @@
 - VetScheduleService
 
 ## Entity Relashionship diagram
-![Logo](https://github.com/FloreaMaria/VetTrust/edit/master/images/diagrama.png)
+!(https://github.com/FloreaMaria/VetTrust/edit/master/images/diagrama.png)
 
 
 ## Technologies 
