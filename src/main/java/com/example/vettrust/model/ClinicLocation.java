@@ -16,10 +16,8 @@ public class ClinicLocation {
     private Boolean availability;
     private String city;
     private String address;
-    @OneToMany(mappedBy = "clinicLocation", cascade = CascadeType.ALL)
-    private List<VetUser> vetUserList;
 
     @OneToMany(mappedBy = "clinicLocation", cascade = CascadeType.ALL)
-    private List<Appointment> appointments;
+    private List<VetSchedule> vetSchedules;
 
 }

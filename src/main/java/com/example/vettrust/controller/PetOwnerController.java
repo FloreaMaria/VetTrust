@@ -1,5 +1,6 @@
 package com.example.vettrust.controller;
 
+import com.example.vettrust.dto.VetReviewDto;
 import com.example.vettrust.dto.user.PetOwnerDto;
 import com.example.vettrust.model.PetOwner;
 import com.example.vettrust.service.PetOwnerService;
@@ -22,7 +23,7 @@ public class PetOwnerController {
         this.petOwnerService = petOwnerService;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("find-by-id/{id}")
     public ResponseEntity<PetOwnerDto> findPetOwnerById(@PathVariable("id") Long id){
        PetOwnerDto petOwnerDto = petOwnerService.findPetOwnerDto(id);
        return new ResponseEntity<>(petOwnerDto, HttpStatus.OK);
@@ -37,6 +38,15 @@ public class PetOwnerController {
     public ResponseEntity<String> deleteById(@PathVariable Long id){
         petOwnerService.deletePetOwner(id);
         return ResponseEntity.ok().body("User with id " + id + " was successfully deleted");
+    }
+
+    @PostMapping("/add-review")
+    public ResponseEntity<VetReviewDto> addClientReview(@RequestBody VetReviewDto review) {
+        VetReviewDto result = petOwnerService.addClientReview(review);
+        if (result == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 }

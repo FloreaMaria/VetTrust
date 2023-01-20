@@ -42,8 +42,23 @@ public class PetService {
     }
 
     @Transactional
+    public List<Pet> findByOwnerEmail(String email){
+        return petRepository.findAllByPetOwnerEmail(email);
+    }
+
+
+    @Transactional
     public List<PetDto> findPetsByOwnerId(Long id){
             return findByOwnerId(id).stream().map(PetDto::entityToDto).collect(Collectors.toList());
+    }
+    @Transactional
+    public List<PetDto> findPetsByOwnerEmail(String email){
+
+        PetOwner petOwner = petOwnerService.findPetOwnerByEmail(email);
+        if(petOwner != null){
+            return findByOwnerEmail(email).stream().map(PetDto::entityToDto).collect(Collectors.toList());
+        }
+       return null;
     }
 
     public PetDto savePet(@NotNull PetDto petDto){

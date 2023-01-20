@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import java.util.List;
 import javax.persistence.*;
-
 @Entity
 @Getter
 @Setter
@@ -15,6 +14,8 @@ public class Appointment {
     private Long id;
 
     private String date;
+    private String hour;
+
     @Enumerated(EnumType.STRING)
     private AppointmentStatus appointmentStatus;
 
@@ -22,14 +23,15 @@ public class Appointment {
     private Pet pet;
 
     @ManyToOne
-    private VetUser vetUser;
-
-    @ManyToOne
-    private ClinicLocation clinicLocation;
+    private VetSchedule vetSchedule;
 
     @ManyToOne
     private AppointmentType appointmentType;
 
-    @OneToMany(mappedBy = "appointment", cascade = CascadeType.ALL)
+    @ManyToOne
+    private DiagnosisConclusion diagnosisConclusion;
+
+    @OneToMany(mappedBy = "appointment", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Notification> notifications;
 }
+

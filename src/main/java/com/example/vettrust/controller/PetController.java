@@ -2,6 +2,7 @@ package com.example.vettrust.controller;
 
 import com.example.vettrust.dto.PetDto;
 import com.example.vettrust.dto.user.PetOwnerDto;
+import com.example.vettrust.model.PetOwner;
 import com.example.vettrust.service.PetService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.List;
 
@@ -39,9 +41,9 @@ public class PetController {
         return new ResponseEntity<>(petService.getAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/get-by-owner-id/{id}")
-    public  ResponseEntity<List<PetDto>> getByOwnerId(@PathVariable("id") Long id){
-        return new ResponseEntity<>(petService.findPetsByOwnerId(id), HttpStatus.OK);
+    @PostMapping("/get-by-owner-email")
+    public  ResponseEntity<List<PetDto>> getByOwnerId(@RequestBody Map<String, String> payload){
+        return new ResponseEntity<>(petService.findPetsByOwnerEmail(payload.get("email")), HttpStatus.OK);
     }
     @PutMapping("/update-by-id/{id}")
     public ResponseEntity<PetDto> update(@PathVariable("id") Long id, @RequestBody PetDto petDto){

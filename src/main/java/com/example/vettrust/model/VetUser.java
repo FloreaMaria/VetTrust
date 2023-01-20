@@ -3,6 +3,7 @@ package com.example.vettrust.model;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.*;
 
 @Entity
@@ -12,12 +13,13 @@ import javax.persistence.*;
 public class VetUser extends BaseUser{
     private Double rating;
 
-    @ManyToOne
-    private ClinicLocation clinicLocation;
-
     @OneToMany(mappedBy = "vetUser", cascade = CascadeType.ALL)
     private List<VetReview> vetReviews;
 
     @OneToMany(mappedBy = "vetUser", cascade = CascadeType.ALL)
-    private List<Appointment> appointments;
+    private Set<VetSchedule> vetSchedules;
+
+    @OneToMany(mappedBy = "vetUser", cascade = CascadeType.ALL)
+    private List<DiagnosisConclusion> diagnosisConclusions;
+
 }
