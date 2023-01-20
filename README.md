@@ -11,6 +11,9 @@
 ### Vet Users
  As a vet user you have the options to view all your appointments based on different criteria, update their status, to modify your schedule and available hours, to work from different locations of clinic, view pacients records, issue diagnosis for patients, receive feedback on your performance.
 
+### Pets
+ As a pet you have the chance to enjoy your favorite vet or your favorite clinic location chosen by your owner as well as receiving the best treatment by well reviewed veterinarian.
+
 ## User Stories - implemented 
 1. As a pet owner I would like to view all of my pet's appointments;
 2. As a pet owner I would like to receive reminders of my appointment;
@@ -42,4 +45,6 @@
 * [Mysql](https://www.mysql.com/)
 * [Postman](https://www.postman.com/)
 * [Junit](https://junit.org/junit5/)
+
+
 
