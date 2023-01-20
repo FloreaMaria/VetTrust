@@ -60,7 +60,7 @@
 - VetScheduleService
 
 ## Entity Relashionship diagram
-<img src="/master/images/diagrama.png" alt="Alt text" title="Optional title">
+<img src="diagrama.png" alt="Alt text" title="Optional title">
 
 
 ## Technologies 
