@@ -1,8 +1,8 @@
 # Vet Trust
 
-# Vet Trust is an application intended to facilitate appointments at the veterinarian for pets. 
+## Vet Trust is an application intended to facilitate appointments at the veterinarian for pets. 
 
-##App functionalities
+## App functionalities
 
 ## User Stories - implemented 
 1. As a user, I would like to be able to create a profile on the platform so that I can use it;
