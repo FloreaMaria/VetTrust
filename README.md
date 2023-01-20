@@ -59,8 +59,8 @@
 - VetUserService
 - VetScheduleService
 
-##Entity Relashionship diagram
-![alt text](http://url/to/img.png)
+## Entity Relashionship diagram
+![Logo](https://github.com/FloreaMaria/VetTrust/edit/master/images/mymentologo.png)
 
 
 ## Technologies 
