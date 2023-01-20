@@ -71,6 +71,8 @@
 * [Mysql](https://www.mysql.com/)
 * [Postman](https://www.postman.com/)
 * [Junit](https://junit.org/junit5/)
+* [Mockito](https://site.mockito.org/)
+* [Swagger](https://swagger.io/)
 
 
 
