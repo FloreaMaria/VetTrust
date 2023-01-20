@@ -1,6 +1,7 @@
 package com.example.vettrust.service;
 
 import com.example.vettrust.dto.PetDto;
+import com.example.vettrust.exception.NoPetFoundException;
 import com.example.vettrust.model.Pet;
 import com.example.vettrust.model.PetOwner;
 import com.example.vettrust.repository.PetRepository;
@@ -9,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,78 +28,58 @@ public class PetService {
     }
 
     @Transactional
-    public Pet findById(Long id){
-        return petRepository.findById(id).orElseThrow();
+    public Pet findById(@NotNull Long id){
+        return petRepository.findById(id).orElseThrow(() -> new NoPetFoundException("Pet with given id doesn't exist"));
     }
 
     @Transactional
-    public PetDto findByIdDao(Long id){
+    public PetDto findByIdDao(@NotNull Long id) {
         Pet pet = findById(id);
         return PetDto.entityToDto(pet);
     }
-    @Transactional
-    public List<Pet> findByOwnerId(Long id){
-        return petRepository.findAllByPetOwnerId(id);
-    }
 
     @Transactional
-    public List<Pet> findByOwnerEmail(String email){
+    public List<Pet> findByOwnerEmail(@NotNull String email){
+        Optional<PetOwner> petOwner = petOwnerService.findPetOwnerByEmail(email);
         return petRepository.findAllByPetOwnerEmail(email);
     }
 
-
     @Transactional
-    public List<PetDto> findPetsByOwnerId(Long id){
-            return findByOwnerId(id).stream().map(PetDto::entityToDto).collect(Collectors.toList());
-    }
-    @Transactional
-    public List<PetDto> findPetsByOwnerEmail(String email){
-
-        PetOwner petOwner = petOwnerService.findPetOwnerByEmail(email);
-        if(petOwner != null){
-            return findByOwnerEmail(email).stream().map(PetDto::entityToDto).collect(Collectors.toList());
-        }
-       return null;
+    public List<PetDto> findPetsByOwnerEmail(@NotNull String email){
+        return findByOwnerEmail(email).stream().map(PetDto::entityToDto).collect(Collectors.toList());
     }
 
     public PetDto savePet(@NotNull PetDto petDto){
         Pet pet = new Pet();
         PetOwner petOwner =  petOwnerService.findPetOwnerById(petDto.getPetOwnerId());
-        if(petOwner != null){
-            pet.setPetOwner(petOwner);
-            pet.setAge(petDto.getAge());
-            pet.setName(petDto.getName());
-            pet.setType(petDto.getType());
-            return PetDto.entityToDto(petRepository.save(pet));
-        }
-        return null;
+        pet.setPetOwner(petOwner);
+        pet.setAge(petDto.getAge());
+        pet.setName(petDto.getName());
+        pet.setType(petDto.getType());
+        return PetDto.entityToDto(petRepository.save(pet));
+
     }
 
     public List<PetDto> getAll(){
         List<Pet> pets =  petRepository.findAll();
         return pets.stream().map(PetDto::entityToDto).collect(Collectors.toList());
     }
-    public PetDto updatePet(Long petId, PetDto petDto){
+
+    public PetDto updatePet(@NotNull Long petId, PetDto petDto){
         Pet pet = findById(petId);
-        if(pet != null){
-            pet.setAge(petDto.getAge());
-            PetOwner petOwner = petOwnerService.findPetOwnerById(petDto.getPetOwnerId());
-            if(petOwner != null){
-                pet.setPetOwner(petOwner);
-            }
-            pet.setName(petDto.getName());
-            return PetDto.entityToDto(petRepository.save(pet));
-        }
-        return null;
+        pet.setAge(petDto.getAge());
+        PetOwner petOwner = petOwnerService.findPetOwnerById(petDto.getPetOwnerId());
+        pet.setPetOwner(petOwner);
+        pet.setName(petDto.getName());
+        return PetDto.entityToDto(petRepository.save(pet));
+
     }
 
-    public boolean deletePet(Long id){
+    public boolean deletePet(@NotNull Long id){
         Pet pet = findById(id);
-        if(pet != null){
-            petRepository.delete(pet);
-            return true;
-        }
-        return false;
+        petRepository.delete(pet);
+        return true;
+
     }
 
 

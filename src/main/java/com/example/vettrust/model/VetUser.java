@@ -16,7 +16,7 @@ public class VetUser extends BaseUser{
     @OneToMany(mappedBy = "vetUser", cascade = CascadeType.ALL)
     private List<VetReview> vetReviews;
 
-    @OneToMany(mappedBy = "vetUser", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "vetUser", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<VetSchedule> vetSchedules;
 
     @OneToMany(mappedBy = "vetUser", cascade = CascadeType.ALL)

@@ -2,17 +2,17 @@ package com.example.vettrust.service;
 
 import com.example.vettrust.dto.VetReviewDto;
 import com.example.vettrust.dto.user.PetOwnerDto;
+import com.example.vettrust.exception.NoPetOwnerFoundException;
+import com.example.vettrust.exception.NoVetFoundException;
 import com.example.vettrust.model.PetOwner;
 import com.example.vettrust.model.VetReview;
 import com.example.vettrust.model.VetUser;
 import com.example.vettrust.repository.PetOwnerRepository;
-import com.example.vettrust.repository.PetRepository;
 import com.example.vettrust.repository.VetReviewRepository;
 import com.example.vettrust.repository.VetUserRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -22,43 +22,51 @@ import java.util.stream.Collectors;
 @Service
 public class PetOwnerService {
     private final PetOwnerRepository petOwnerRepository;
-    private final PetRepository petRepository;
     private final VetUserRepository vetUserRepository;
     private final VetReviewRepository vetReviewRepository;
 
     @Autowired
-    public PetOwnerService(PetOwnerRepository petOwnerRepository, PetRepository petRepository,VetUserRepository vetUserRepository, VetReviewRepository vetReviewRepository) {
+    public PetOwnerService(PetOwnerRepository petOwnerRepository, VetUserRepository vetUserRepository, VetReviewRepository vetReviewRepository) {
         this.petOwnerRepository = petOwnerRepository;
-        this.petRepository = petRepository;
         this.vetUserRepository = vetUserRepository;
         this.vetReviewRepository = vetReviewRepository;
     }
 
-    @Transactional
-    public PetOwner findPetOwnerById(Long id){
-        return petOwnerRepository.findById(id).orElseThrow();
+
+    public PetOwnerDto savePetOwner(@NotNull PetOwnerDto petOwnerDto){
+        PetOwner petOwner = new PetOwner();
+        petOwner.setEmail(petOwnerDto.getEmail());
+        petOwner.setFirstName(petOwnerDto.getFirstName());
+        petOwner.setLastName(petOwnerDto.getLastName());
+        petOwner.setPhoneNumber(petOwnerDto.getPhoneNumber());
+        petOwner.setPassword(petOwnerDto.getPassword());
+        return PetOwnerDto.entityToDto(petOwnerRepository.save(petOwner));
+
     }
 
     @Transactional
-    public PetOwner findPetOwnerByEmail(String email){
-        return petOwnerRepository.findByEmail(email);
+    public PetOwner findPetOwnerById(@NotNull Long id){
+        return petOwnerRepository.findById(id).orElseThrow(()-> new NoPetOwnerFoundException("Pet owner with given id doesn't exist"));
+    }
+
+    @Transactional
+    public Optional<PetOwner> findPetOwnerByEmail(@NotNull String email){
+        return Optional.ofNullable(petOwnerRepository.findByEmail(email).orElseThrow(() -> new NoPetOwnerFoundException("Pet owner with given email not found")));
     }
 
 
     @Transactional
-    public PetOwnerDto findPetOwnerDto(Long id){
+    public PetOwnerDto findPetOwnerDto(@NotNull Long id){
         PetOwner petOwner= findPetOwnerById(id);
         return PetOwnerDto.entityToDto(petOwner);
     }
 
-    public boolean deletePetOwner(Long id){
-        if(id != null) {
-            PetOwner petOwner = findPetOwnerById(id);
-            petOwnerRepository.delete(petOwner);
-            return true;
-        }
-        return false;
+    public boolean deletePetOwner(@NotNull Long id){
+        PetOwner petOwner = findPetOwnerById(id);
+        petOwnerRepository.delete(petOwner);
+        return true;
     }
+
     @Transactional
     public List<PetOwnerDto> getAllPetOwners(){
         List<PetOwner> petOwners =  petOwnerRepository.findAll();
@@ -67,13 +75,10 @@ public class PetOwnerService {
 
     @Transactional
     public VetReviewDto addClientReview(@NotNull VetReviewDto dto) {
-        Optional<VetUser> optionalVetUser = vetUserRepository.findById(dto.getVetId());
+        Optional<VetUser> optionalVetUser = Optional.ofNullable(vetUserRepository.findById(dto.getVetId()).orElseThrow(() -> new NoVetFoundException("Vet user with given id not found")));
         PetOwner petOwner = findPetOwnerById(dto.getPetOwnerId());
         if (optionalVetUser.isPresent() && petOwner != null) {
 
-            //check if owner had a appointment with vet
-
-            //check if owner already added review for vet
             Optional<VetReview> alreadyAddedReviewForRestaurant = petOwner.getVetReviews().stream().filter(
                     review -> review.getPetOwner().getId().equals(petOwner.getId()) &&
                             review.getVetUser().getId().equals(dto.getVetId())).findAny();
