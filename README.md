@@ -37,6 +37,28 @@
 4. As a vet user, I would like to receive reminders and notifications about canceled appointments;
 5. As a vet user, I would like to be able to attach files to my diagnosis conclusion;
 
+## Entities
+
+- Appointment
+- AppointmentType
+- Pet
+- Pet Owner
+- Vet User
+- Vet Schedule
+- Vet Review
+- Clinic Location
+- Diagnosis Conclusion
+- Notification
+- Base User
+
+## Services
+
+- AppointmentService
+- PetService
+- PetOwnerService
+- VetUserService
+- VetScheduleService
+
 ## Technologies 
 
 * [Java](https://www.java.com/en/)
