@@ -3,6 +3,7 @@ package com.example.vettrust.service;
 import com.example.vettrust.dto.AppointmentDto;
 import com.example.vettrust.dto.VetScheduleDto;
 import com.example.vettrust.enums.AppointmentStatus;
+import com.example.vettrust.enums.AppointmentValueType;
 import com.example.vettrust.enums.NotificationType;
 import com.example.vettrust.model.*;
 import com.example.vettrust.repository.*;
@@ -63,7 +64,7 @@ public class AppointmentService {
                         Set<String> availableWorkingHoursSet = new HashSet<String>(Arrays.asList(availableWorkingHours.split(",")));
                         for (String availableHour: availableWorkingHoursSet) {
                             if(chosenHour.equals(availableHour.trim())){
-                                Optional<AppointmentType> appointmentType =  appointmentTypeRepository.findByName(appointmentDto.getAppointmentType());
+                                Optional<AppointmentType> appointmentType =  appointmentTypeRepository.findByAppointmentValueType((appointmentDto.getAppointmentValueType()));
                                 if(appointmentType.isPresent()){
 
                                     availableWorkingHoursSet.remove(availableHour);
@@ -163,6 +164,22 @@ public class AppointmentService {
         List<Appointment> appointments = appointmentRepository.findByVetScheduleVetUserId(vetId);
         return appointments.stream().map(AppointmentDto::entityToDto).collect(toList());
     }
+
+    @Transactional
+    public List<AppointmentDto> getAllSpecificTypeAppointmentsForVet(@NotNull Long vetId,@NotNull AppointmentValueType appointmentType){
+        List<Appointment> appointments = appointmentRepository.findByVetScheduleVetUserIdAndAppointmentTypeAppointmentValueType(vetId, appointmentType);
+        return appointments.stream().map(AppointmentDto::entityToDto).collect(toList());
+
+    }
+
+    @Transactional
+    public List<AppointmentDto> getAllSpecificDateAppointmentsForVet(@NotNull Long vetId,@NotNull String appointmentDate){
+        List<Appointment> appointments = appointmentRepository.findByVetScheduleVetUserIdAndDate(vetId, appointmentDate);
+        return appointments.stream().map(AppointmentDto::entityToDto).collect(toList());
+
+    }
+
+
 
 
 

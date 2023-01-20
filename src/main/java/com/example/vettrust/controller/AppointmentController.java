@@ -2,6 +2,7 @@ package com.example.vettrust.controller;
 
 import com.example.vettrust.dto.AppointmentDto;
 import com.example.vettrust.dto.VetReviewDto;
+import com.example.vettrust.enums.AppointmentValueType;
 import com.example.vettrust.service.AppointmentService;
 import com.example.vettrust.service.VetScheduleService;
 import org.jetbrains.annotations.NotNull;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/appointment")
@@ -68,5 +70,27 @@ public class AppointmentController {
         return new ResponseEntity<>(appointments, HttpStatus.OK);
     }
 
+    @PostMapping("filter-by-type")
+    public ResponseEntity<List<AppointmentDto>> getAllSpecificTypeAppointmentsForVet(@RequestBody Map<String, String> payload){
+        Long vetId = Long.valueOf(payload.get("vet_id"));
+        AppointmentValueType appointmentValueType = AppointmentValueType.valueOf(payload.get("appointment_value_type"));
+        List<AppointmentDto> appointments = appointmentService.getAllSpecificTypeAppointmentsForVet(vetId, appointmentValueType);
+        if(appointments == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(appointments, HttpStatus.OK);
+    }
 
-}
+    @PostMapping("filter-by-date")
+    public ResponseEntity<List<AppointmentDto>> getAllSpecificDateAppointmentsForVet(@RequestBody Map<String, String> payload){
+        Long vetId = Long.valueOf(payload.get("vet_id"));
+        String date = payload.get("date");
+        List<AppointmentDto> appointments = appointmentService.getAllSpecificDateAppointmentsForVet(vetId, date);
+        if(appointments == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(appointments, HttpStatus.OK);
+    }
+
+
+    }

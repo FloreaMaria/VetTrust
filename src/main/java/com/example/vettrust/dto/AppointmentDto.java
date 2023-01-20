@@ -1,6 +1,7 @@
 package com.example.vettrust.dto;
 
 import com.example.vettrust.enums.AppointmentStatus;
+import com.example.vettrust.enums.AppointmentValueType;
 import com.example.vettrust.model.Appointment;
 import com.example.vettrust.model.Notification;
 import lombok.Getter;
@@ -22,7 +23,7 @@ public class AppointmentDto {
     private Long petId;
     private Long vetId;
     private Long clinicLocationId;
-    private String appointmentType;
+    private AppointmentValueType appointmentValueType;
     private Double price;
     private DiagnosisConclusionDto diagnosisConclusionDto;
     private List<NotificationDto> notificationDtoList;
@@ -30,7 +31,7 @@ public class AppointmentDto {
     public static @NotNull AppointmentDto entityToDto(@NotNull Appointment appointment) {
         AppointmentDto appointmentDto = new AppointmentDto();
         appointmentDto.setAppointmentStatus(appointment.getAppointmentStatus());
-        appointmentDto.setAppointmentType(appointment.getAppointmentType().getName());
+        appointmentDto.setAppointmentValueType(appointment.getAppointmentType().getAppointmentValueType());
         appointmentDto.setDate(appointment.getDate());
         appointmentDto.setPetId(appointment.getPet().getId());
         appointmentDto.setClinicLocationId(appointment.getVetSchedule().getClinicLocation().getId());
